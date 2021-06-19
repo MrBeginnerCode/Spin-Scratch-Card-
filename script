@@ -1,0 +1,54 @@
+local spinbutton = script.Parent:WaitForChild("Spinbutton")
+local Spin = script.Parent:WaitForChild("Spin")
+
+---- open the spin
+local touchtospin = Spin:WaitForChild("Touchtospin")
+local text = Spin:WaitForChild("Label1")
+local Label2 = Spin:WaitForChild("Label2")
+local Label3 = Spin:WaitForChild("Label3")
+local Events = game:GetService("ReplicatedStorage"):WaitForChild("SpinnerEvents")
+
+local Waitime = 0.1
+local spinCount = 50
+local objects = {1522361034,12656209,176210836}
+local start = math.random(1,#objects)
+---pass a function
+local start = math.random(1, #objects)
+
+local function nextObject()
+	if start == #objects then
+		start = 1
+	else
+		start += 1
+	end
+
+	return objects[start]
+
+end
+
+--- spin
+spinbutton.MouseButton1Up:Connect(function()
+	Spin.Visible = not Spin.Visible
+end)
+----
+
+touchtospin.MouseButton1Up:Connect(function()
+	for i = spinCount,0,-1 do
+		text.Image = nextObject()
+		Label2.Image = nextObject()
+		Label3.Image = nextObject()
+		
+		if i <= 10 then
+			Waitime += 0.1
+			
+		end
+		wait(Waitime)
+	end
+	if text == Label2 and Label2 == Label3 and Label3 == text then
+		print("you got a pie")
+		Waitime = 0.1
+	else
+		print("Nothing")
+		Waitime = 0.1
+	end
+end)
